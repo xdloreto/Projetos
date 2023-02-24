@@ -1,0 +1,42 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package Principal;
+
+import Conexão.ConexaoSingleton;
+import Excecao.ColecaoException;
+import Excecao.ConexaoException;
+import Modelo.Produto;
+import Persistência.ColecaoDeProduto;
+import Persistência.ColecaoDeProdutoemBDR;
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
+/**
+ *
+ * @author Gustavo Loreto
+ */
+public class Main {
+    
+    public static void main(String[] args) throws ColecaoException {
+        List<Produto> lp = new ArrayList<Produto>();
+        try {
+            Connection con = ConexaoSingleton.getConexao();
+            ColecaoDeProduto cp = new ColecaoDeProdutoemBDR(con);
+//            Produto p1 = new Produto(4, "Teste");;
+//            cp.inserir(p1);
+//            lp = cp.porNome("Feijão");
+            lp = cp.todos();
+        } catch (ConexaoException e) {
+            System.out.println("Erro: Ocorreu uma falha na conexão com o banco de dados!");
+        } 
+        
+        for (Produto p : lp) {;
+            System.out.println("-----------------------------------------------");
+            System.out.println("ID: " + p.getId()+ " \nNome: " + p.getNome());
+            
+        }
+//            
+    }
+}
